@@ -148,10 +148,6 @@ PRODUCT_PACKAGES += \
     WifiOverlay \
     TetheringConfigOverlay
 
-# Camera
-PRODUCT_PACKAGES += \
-    Graphene
-
 # SystemUI
 PRODUCT_PACKAGES += \
     ScreenRecordOverlay \

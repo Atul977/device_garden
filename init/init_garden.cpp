@@ -30,6 +30,7 @@
 #include <cstdlib>
 #include <stdlib.h>
 #include <fstream>
+#include <regex>
 #include <string.h>
 #include <sys/sysinfo.h>
 #include <unistd.h>
@@ -138,33 +139,41 @@ void vendor_load_properties()
     property_override(string("ro.charger.enable_suspend"), string("true"));
 
     std::string region = GetProperty("ro.boot.hwc", "");
-    std::string product_name = GetProperty("ro.product.name", "");
+    std::string hwname = GetProperty("ro.boot.hwname", "");
+    std::string product_name = GetProperty("ro.product.vendor.name", "");
 
-    if (product_name == "angelica") {
+    if (regex_match(product_name, std::regex("(angelica_)(.*)"))) {
         property_override("ro.product.brand", "Redmi");
         property_override("ro.product.model", "Redmi 9C");
         property_override("ro.product.device", "angelica");
-    } else if (product_name == "angelicain") {
+    } else if (hwname == "angelicain") {
+        if (product_name == "angelicain_in") {
+            property_override("ro.product.model", "POCO C31");
+        } else {
+            property_override("ro.product.model", "POCO C3");
+        }
         property_override("ro.product.brand", "POCO");
-        property_override("ro.product.model", "POCO C3");
         property_override("ro.product.device", "angelicain");
-    } else if (product_name == "dandelion_id2") { // Redmi 10A Indonesia
-        property_override("ro.product.model", "Redmi 10A");
-    } else if (product_name == "angelican") {
+    } else if (hwname == "angelican") {
         property_override("ro.product.brand", "Redmi");
         property_override("ro.product.model", "Redmi 9C NFC");
         property_override("ro.product.device", "angelican");
-    } else if (product_name == "cattail") {
+    } else if (hwname == "cattail") {
         property_override("ro.product.brand", "Redmi");
         property_override("ro.product.model", "Redmi 9");
         property_override("ro.product.device", "cattail");
-    } else if (product_name == "dandelion") {
+    } else if (hwname == "dandelion") {
         property_override("ro.product.brand", "Redmi");
         property_override("ro.product.device", "dandelion");
         if (region == "India_9i") {
-            property_override("ro.product.model", "Redmi 9I");
+            property_override("ro.product.model", "Redmi 9i");
+        } else if (region == "VDF") {
+            property_override("ro.product.model", "Redmi 9AT");
+        } else if (regex_match(product_name, std::regex("(dandelion_)(.*)(2)"))) {
+            property_override("ro.product.model", "Redmi 10A");
         } else {
             property_override("ro.product.model", "Redmi 9A");
+        }
     }
 
 }

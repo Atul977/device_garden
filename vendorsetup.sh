@@ -7,4 +7,3 @@ rm -rf packages/apps/Gallery
 rm -rf  packages/apps/Gallery2
 git clone https://github.com/ArrowOS/android_frameworks_opt_net_ims.git -b arrow-12.1 frameworks/opt/net/ims
 git clone https://github.com/ArrowOS/android_frameworks_opt_telephony.git -b arrow-12.1 frameworks/opt/telephony
-git clone https://gitlab.com/adarsh956/lawnchair.git -b main vendor/lawnchair
